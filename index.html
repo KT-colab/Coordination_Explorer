@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+dsf
+<title>
+LUCA Coordination Explorer MVP
+</title>
+
+
+<style>
+
+/* Overall page styling */
+body {
+    font-family: Arial, sans-serif;
+    background:#f5f6fa;
+    margin:40px;
+}
+
+/* Main content container */
+.container {
+
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+
+}
+
+/* Main page heading */
+h1 {
+
+color:#1d3557;
+
+}
+
+/* Search input box */
+input {
+
+width:80%;
+padding:12px;
+font-size:16px;
+
+}
+
+/* Search button */
+button {
+
+padding:12px;
+background:#1d3557;
+color:white;
+border:none;
+cursor:pointer;
+
+}
+
+/* Generic card used to separate sections */
+.card {
+
+background:#f1f5f9;
+padding:20px;
+margin-top:20px;
+border-radius:8px;
+
+}
+
+
+/* ---------- Hierarchy Display Styling ---------- */
+
+/* Displays hierarchy items in one horizontal row */
+.tree {
+
+display:flex;
+align-items:center;
+gap:12px;
+flex-wrap:wrap;
+font-size:17px;
+
+}
+
+/* Individual hierarchy box (State, County, Town, etc.) */
+.tree-item {
+
+background:white;
+padding:12px 18px;
+border-radius:8px;
+border:1px solid #d5dce5;
+font-weight:500;
+
+}
+
+/* Arrow between hierarchy levels */
+.arrow {
+
+font-size:25px;
+color:#777;
+
+}
+
+/* Highlights whichever jurisdiction matched the user's search */
+.highlight {
+
+font-weight:bold;
+color:#e63963;
+border:2px solid #e63963;
+
+}
+
+
+/* Smaller informational text */
+.small-note {
+
+color:#555;
+font-size:14px;
+
+}
+
+/* Contact information card styling */
+.contact-box {
+
+background:white;
+border-left:5px solid #1d3557;
+padding:15px;
+margin-top:15px;
+border-radius:8px;
+
+}
+
+/* Contact box heading */
+.contact-box h3 {
+
+margin-top:0;
+color:#1d3557;
+
+}
+
+/* Paragraph spacing inside contact cards */
+.contact-box p {
+
+margin:8px 0;
+
+}
+
+/* Styling for FIPS identifiers */
+.identifier {
+
+background:#eef2ff;
+padding:10px;
+border-radius:6px;
+font-size:14px;
+margin-top:10px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>
+LUCA Coordination Explorer
+</h1>
+
+<p>
+
+Prototype showing how jurisdictions connect and who should coordinate during LUCA activities.
+
+</p>
+
+
+<!-- Search box where user enters a city, county, town, or state -->
+<input
+    id="search"
+    placeholder="Search city, town, county..."
+    onkeydown="if(event.key==='Enter') searchLocation();"
+>
+
+<!-- Runs the searchLocation() function when clicked -->
+<button onclick="searchLocation()">
+Search
+</button>
+
+<!-- Results will be inserted here dynamically -->
+<div id="result"></div>
+
+</div>
+
+
+
+<script>
+
+/*
+Stores every row from the CSV as a JavaScript object.
+Each object represents one jurisdiction.
+*/
+let data=[];
+
+/*
+Keeps track of the user's current search text.
+Used later so matching names can be highlighted.
+*/
+let currentSearch="";
+
+
+
+/* =====================================================
+   Load the CSV file and convert each row into an object
+   ===================================================== */
+
+fetch("TEST_luca_gov_overlap_ny - v1(Sheet1).csv")
+
+.then(response => response.text())
+
+.then(csv => {
+
+    // Split the CSV into individual rows
+    let rows = csv.split("\n");
+
+    // First row contains the column names
+    let headers = rows[0].split(",");
+
+    // Process every remaining row
+    for(let i=1;i<rows.length;i++){
+
+        let values = rows[i].split(",");
+
+        let obj={};
+
+        // Pair each column header with its corresponding value
+        headers.forEach((header,index)=>{
+
+            obj[header.trim()] = values[index]?.trim();
+
+        });
+
+        // Save the completed object into the data array
+        data.push(obj);
+
+    }
+
+    // Helpful for verifying the CSV loaded correctly
+    console.log(data);
+
+});
+
+
+
+
+
+/* =====================================================
+   Searches the dataset for matching jurisdictions
+   ===================================================== */
+
+function searchLocation(){
+
+    // Get user input and convert to lowercase for easier comparisons
+    let searchValue =
+    document.getElementById("search").value.toLowerCase();
+
+    currentSearch = searchValue;
+
+    /*
+    Search across several jurisdiction fields.
+    If any field contains the user's search text,
+    include that row in the results.
+    */
+    let matches=data.filter(row=>{
+
+        return (
+
+        (row.PL_NAME || "").toLowerCase().includes(searchValue)
+
+        ||
+
+        (row.MCD_NAME || "").toLowerCase().includes(searchValue)
+
+        ||
+
+        (row.COU_NAME || "").toLowerCase().includes(searchValue)
+
+        ||
+
+        (row.ST_NAME || "").toLowerCase().includes(searchValue)
+
+        );
+
+    });
+
+    // Display the matching record(s)
+    displayResult(matches);
+
+}
+
+
+
+
+
+/* =====================================================
+   Highlights the portion of text that matched the search
+   ===================================================== */
+
+function highlightMatch(value){
+
+    // Prevent errors if the value doesn't exist
+    if(!value){
+
+        return "";
+
+    }
+
+    // Wrap matching text inside a highlighted span
+    if(value.toLowerCase().includes(currentSearch)){
+
+        return `<span class="highlight">${value}</span>`;
+
+    }
+
+    // Otherwise return the original value
+    return value;
+
+}
+
+
+
+
+
+
+/* =====================================================
+   Builds the HTML that displays search results
+   ===================================================== */
+
+function displayResult(matches){
+
+    let div=document.getElementById("result");
+
+    // If no matches were found, notify the user
+    if(matches.length===0){
+
+        div.innerHTML=
+        "<div class='card'>No results found</div>";
+
+        return;
+
+    }
+
+    /*
+    Currently the prototype displays only the first match.
+    Future versions could loop through every matching result.
+    */
+    let row=matches[0];
+
+
+
+    // Build the result page using template literals
+    let html=`
+
+<div class="card">
+
+<h2>
+Hierarchy
+</h2>
+
+<div class="tree">
+
+<div class="tree-item">
+
+${highlightMatch(row.ST_NAME || "")}
+
+</div>
+
+<div class="arrow">
+→
+</div>
+
+<div class="tree-item">
+
+${highlightMatch(row.COU_NAME || "")}
+
+</div>
+
+<div class="arrow">
+→
+</div>
+
+<div class="tree-item">
+
+${highlightMatch(row.MCD_NAME || "No Town/Subdivision Listed")}
+
+</div>
+
+<div class="arrow">
+→
+</div>
+
+<div class="tree-item">
+
+${highlightMatch(row.PL_NAME || "No Place Listed")}
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+Coordination Network
+</h2>
+
+<p>
+
+This jurisdiction should be aware of and coordinate with the following levels of government:
+
+</p>
+
+
+<!-- Local government contact information -->
+<div class="contact-box">
+
+<h3>
+${row.MCD_NAME || "Local Governing Level"}
+</h3>
+
+<p>
+<b>Role:</b> Local governing level
+</p>
+
+<div class="identifier">
+
+<b>Identifiers</b><br><br>
+
+State FIPS: ${row.STATEFP || "N/A"}<br>
+
+County FIPS: ${row.COUNTYFP || "N/A"}<br>
+
+County Subdivision FIPS: ${row.COUSUBFP || "N/A"}
+
+</div>
+
+<p>
+<b>LUCA Contact:</b> [Name Placeholder]
+</p>
+
+<p>
+<b>Email:</b> [email@example.com]
+</p>
+
+<p>
+<b>Phone:</b> (XXX) XXX-XXXX
+</p>
+
+</div>
+
+
+
+
+<!-- County-level contact information -->
+<div class="contact-box">
+
+<h3>
+${row.COU_NAME || "County Level"}
+</h3>
+
+<p>
+<b>Role:</b> County-level coordination
+</p>
+
+<div class="identifier">
+
+<b>Identifiers</b><br><br>
+
+State FIPS: ${row.STATEFP || "N/A"}<br>
+
+County FIPS: ${row.COUNTYFP || "N/A"}
+
+</div>
+
+<p>
+<b>LUCA Contact:</b> [Name Placeholder]
+</p>
+
+<p>
+<b>Email:</b> [email@example.com]
+</p>
+
+<p>
+<b>Phone:</b> (XXX) XXX-XXXX
+</p>
+
+</div>
+
+
+
+
+<!-- State-level contact information -->
+<div class="contact-box">
+
+<h3>
+${row.ST_NAME || "State Level"}
+</h3>
+
+<p>
+<b>Role:</b> State-level coordination
+</p>
+
+<div class="identifier">
+
+<b>Identifiers</b><br><br>
+
+State FIPS: ${row.STATEFP || "N/A"}
+
+</div>
+
+<p>
+<b>LUCA Contact:</b> [Name Placeholder]
+</p>
+
+<p>
+<b>Email:</b> [email@example.com]
+</p>
+
+<p>
+<b>Phone:</b> (XXX) XXX-XXXX
+</p>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- Placeholder for future expansion -->
+<div class="card">
+
+<h2>
+Other Jurisdictions in Same Area
+</h2>
+
+<p>
+
+Future feature: display other towns, villages, or cities that share the same county or governing structure.
+
+</p>
+
+</div>
+
+`;
+
+    // Insert the completed HTML into the page
+    div.innerHTML=html;
+
+}
+
+</script>
+
+</body>
+
+</html>
