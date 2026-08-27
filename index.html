@@ -122,12 +122,26 @@
         }
 
 
-        .brand {
+        .brand-button {
             display: flex;
 
             align-items: center;
 
             gap: 13px;
+
+            background: transparent;
+
+            border: 0;
+
+            padding: 0;
+
+            margin: 0;
+
+            color: white;
+
+            cursor: pointer;
+
+            text-align: left;
         }
 
 
@@ -154,6 +168,8 @@
 
             box-shadow:
                 0 6px 18px rgba(0,0,0,0.2);
+
+            flex-shrink: 0;
         }
 
 
@@ -173,6 +189,11 @@
                 rgba(255,255,255,0.68);
 
             font-size: 12px;
+        }
+
+
+        .brand-button:hover .brand-text h1 {
+            color: #dbeafe;
         }
 
 
@@ -420,7 +441,8 @@
             transition:
                 border-color .15s,
                 box-shadow .15s,
-                transform .15s;
+                transform .15s,
+                background .15s;
         }
 
 
@@ -433,6 +455,27 @@
 
             box-shadow:
                 0 5px 18px rgba(37,99,235,0.09);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /*
+            This is the option selected by the keyboard using
+            the Up and Down arrow keys.
+        */
+        .result-option.keyboard-selected {
+            outline: none;
+
+            border-color:
+                var(--blue);
+
+            background:
+                var(--blue-light);
+
+            box-shadow:
+                0 5px 18px rgba(37,99,235,0.12);
 
             transform:
                 translateY(-1px);
@@ -645,6 +688,39 @@
 
 
         /* =========================================================
+           DETAIL BODY GRID
+        ========================================================= */
+
+        .detail-body-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                290px;
+
+            align-items: start;
+        }
+
+
+        .detail-main-column {
+            min-width: 0;
+        }
+
+
+        .detail-sidebar {
+            min-width: 0;
+
+            border-left:
+                1px solid var(--border);
+
+            background:
+                #fbfcfe;
+
+            height: 100%;
+        }
+
+
+        /* =========================================================
            SECTION
         ========================================================= */
 
@@ -772,6 +848,32 @@
 
             box-shadow:
                 0 3px 10px rgba(15,23,42,0.04);
+
+            transition:
+                border-color .15s,
+                box-shadow .15s,
+                background .15s,
+                transform .15s;
+        }
+
+
+        .hierarchy-box.clickable {
+            cursor: pointer;
+        }
+
+
+        .hierarchy-box.clickable:hover {
+            border-color:
+                #9bbcf0;
+
+            background:
+                #f8fbff;
+
+            box-shadow:
+                0 5px 14px rgba(37,99,235,0.08);
+
+            transform:
+                translateY(-1px);
         }
 
 
@@ -814,14 +916,27 @@
             color:
                 var(--navy-dark);
 
-            font-size:
-                14px;
+            font-size: 14px;
 
             font-weight:
                 750;
 
             line-height:
                 1.35;
+        }
+
+
+        .hierarchy-click-hint {
+            display: block;
+
+            margin-top: 5px;
+
+            color:
+                var(--blue);
+
+            font-size: 10px;
+
+            font-weight: 650;
         }
 
 
@@ -934,28 +1049,13 @@
 
         .coordination-intro h3 {
             margin:
-                0 0 6px;
+                0;
 
             color:
                 var(--navy);
 
             font-size:
                 15px;
-        }
-
-
-        .coordination-intro p {
-            margin:
-                5px 0;
-
-            color:
-                #526276;
-
-            font-size:
-                12px;
-
-            line-height:
-                1.6;
         }
 
 
@@ -1077,15 +1177,57 @@
 
 
         /* =========================================================
-           IDENTIFIERS
+           IDENTIFIERS SIDEBAR
         ========================================================= */
+
+        .identifier-sidebar {
+            padding:
+                28px 22px;
+
+            position:
+                sticky;
+
+            top:
+                20px;
+        }
+
+
+        .identifier-sidebar-title {
+            margin:
+                0 0 6px;
+
+            color:
+                var(--navy);
+
+            font-size:
+                17px;
+
+            letter-spacing:
+                -0.02em;
+        }
+
+
+        .identifier-sidebar-description {
+            margin:
+                0 0 18px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+
+            line-height:
+                1.55;
+        }
+
 
         .identifier-grid {
             display:
                 grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(160px, 1fr));
+                1fr;
 
             gap:
                 10px;
@@ -1094,7 +1236,7 @@
 
         .identifier {
             background:
-                #f8fafc;
+                white;
 
             border:
                 1px solid var(--border);
@@ -1420,6 +1562,85 @@
 
 
         /* =========================================================
+           BACK TO SEARCH BUTTON
+        ========================================================= */
+
+        .back-to-search {
+            position:
+                fixed;
+
+            right:
+                24px;
+
+            bottom:
+                24px;
+
+            z-index:
+                1000;
+
+            border:
+                1px solid rgba(255,255,255,0.15);
+
+            background:
+                var(--navy);
+
+            color:
+                white;
+
+            border-radius:
+                999px;
+
+            padding:
+                11px 16px;
+
+            font-size:
+                12px;
+
+            font-weight:
+                750;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 8px 24px rgba(15,23,42,0.18);
+
+            opacity:
+                0;
+
+            visibility:
+                hidden;
+
+            transform:
+                translateY(10px);
+
+            transition:
+                opacity .2s,
+                visibility .2s,
+                transform .2s,
+                background .2s;
+        }
+
+
+        .back-to-search.visible {
+            opacity:
+                1;
+
+            visibility:
+                visible;
+
+            transform:
+                translateY(0);
+        }
+
+
+        .back-to-search:hover {
+            background:
+                var(--navy-dark);
+        }
+
+
+        /* =========================================================
            FOOTER
         ========================================================= */
 
@@ -1448,12 +1669,45 @@
            RESPONSIVE
         ========================================================= */
 
+        @media (max-width: 900px) {
+
+            .detail-body-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .detail-sidebar {
+                border-left: 0;
+
+                border-top:
+                    1px solid var(--border);
+            }
+
+
+            .identifier-sidebar {
+                position:
+                    static;
+            }
+
+
+            .identifier-grid {
+                grid-template-columns:
+                    repeat(
+                        auto-fit,
+                        minmax(160px, 1fr)
+                    );
+            }
+        }
+
+
         @media (max-width: 720px) {
 
             .header-inner {
                 padding:
                     17px;
             }
+
 
             .container {
                 width:
@@ -1463,20 +1717,24 @@
                     20px;
             }
 
+
             .search-hero {
                 padding:
                     23px;
             }
+
 
             .search-form {
                 flex-direction:
                     column;
             }
 
+
             .search-button {
                 width:
                     100%;
             }
+
 
             .detail-header,
             .section {
@@ -1484,10 +1742,12 @@
                     22px;
             }
 
+
             .detail-header-top {
                 flex-direction:
                     column;
             }
+
 
             .hierarchy {
                 flex-direction:
@@ -1497,6 +1757,7 @@
                     stretch;
             }
 
+
             .hierarchy-node {
                 flex-direction:
                     column;
@@ -1504,6 +1765,7 @@
                 align-items:
                     stretch;
             }
+
 
             .hierarchy-arrow {
                 transform:
@@ -1516,16 +1778,26 @@
                     20px;
             }
 
+
             .hierarchy-box {
                 width:
                     100%;
             }
+
 
             .result-option {
                 align-items:
                     flex-start;
             }
 
+
+            .back-to-search {
+                right:
+                    14px;
+
+                bottom:
+                    14px;
+            }
         }
 
     </style>
@@ -1542,7 +1814,12 @@
 
         <div class="header-inner">
 
-            <div class="brand">
+            <button
+                class="brand-button"
+                id="homeButton"
+                type="button"
+                aria-label="Return to LUCA Coordination Explorer home"
+            >
 
                 <div class="brand-mark">
                     L
@@ -1560,7 +1837,7 @@
 
                 </div>
 
-            </div>
+            </button>
 
         </div>
 
@@ -1578,7 +1855,10 @@
              SEARCH
         ===================================================== -->
 
-        <section class="search-hero">
+        <section
+            class="search-hero"
+            id="searchHero"
+        >
 
             <div class="eyebrow">
                 Geographic search
@@ -1629,6 +1909,8 @@
                         spellcheck="false"
                         placeholder="Try “Albany County”, “Albany city”, “Allegany Reservation”..."
                         aria-label="Search for a jurisdiction"
+                        aria-autocomplete="list"
+                        aria-controls="searchResults"
                     >
 
                 </div>
@@ -1648,6 +1930,8 @@
                 You can search by name, including the type when you know it.
                 For example: <strong>Albany County</strong> or
                 <strong>Albany city</strong>.
+                Use <strong>↑</strong> and <strong>↓</strong> to select a result,
+                then press <strong>Enter</strong>.
             </div>
 
 
@@ -1718,9 +2002,22 @@
     </main>
 
 
+    <!-- =========================================================
+         BACK TO SEARCH
+    ========================================================= -->
+
+    <button
+        id="backToSearch"
+        class="back-to-search"
+        type="button"
+        aria-label="Return to search"
+    >
+        ↑ Back to search
+    </button>
+
+
     <footer>
-        LUCA Coordination Explorer · Geographic data shown from the
-        current source CSV
+        LUCA Coordination Explorer
     </footer>
 
 
@@ -1741,17 +2038,25 @@ let currentSearch = "";
 
 
 /*
+    Index of the currently keyboard-highlighted search result.
+
+    -1 means that no result is selected.
+*/
+let activeSearchIndex = -1;
+
+
+/*
+    The currently displayed search results.
+
+    This lets the Up / Down keyboard controls work directly
+    against the results currently shown on screen.
+*/
+let currentSearchMatches = [];
+
+
+/*
     Sentinel values used by the source data to indicate that an
     entity does not exist for that record.
-
-    Examples from the supplied CSV:
-
-        COUSUBFP = 99999
-        PLACEFP  = 99999
-        AIANNHCE = 9999
-
-    We treat those as "not present", rather than displaying them
-    as actual geographic names.
 */
 const MISSING_CODES = new Set([
     "",
@@ -1766,9 +2071,6 @@ const MISSING_CODES = new Set([
 ================================================================ */
 
 
-/*
-    Safely escape text before inserting it into HTML.
-*/
 function escapeHTML(value) {
 
     return String(value ?? "")
@@ -1780,9 +2082,6 @@ function escapeHTML(value) {
 }
 
 
-/*
-    Determine whether a value should be treated as missing.
-*/
 function isMissing(value) {
 
     if (value === undefined || value === null) {
@@ -1795,9 +2094,6 @@ function isMissing(value) {
 }
 
 
-/*
-    Return a cleaned value or an empty string.
-*/
 function clean(value) {
 
     if (isMissing(value)) {
@@ -1808,18 +2104,6 @@ function clean(value) {
 }
 
 
-/*
-    Normalizes search text.
-
-    This allows searches such as:
-
-        Albany County
-        albany county
-        Albany-County
-        ALBANY COUNTY
-
-    to behave much more consistently.
-*/
 function normalize(value) {
 
     return String(value ?? "")
@@ -1833,19 +2117,6 @@ function normalize(value) {
 }
 
 
-/*
-    Remove common geographic type words.
-
-    This lets:
-
-        Albany
-        Albany city
-        Albany town
-        Albany village
-
-    still be understood as the same base name while preserving
-    the actual entity type separately.
-*/
 function stripTypeWords(value) {
 
     return normalize(value)
@@ -1858,9 +2129,6 @@ function stripTypeWords(value) {
 }
 
 
-/*
-    Get the last word of a normalized string.
-*/
 function lastToken(value) {
 
     const parts = normalize(value).split(" ");
@@ -1872,17 +2140,6 @@ function lastToken(value) {
 /* ================================================================
    ENTITY DEFINITIONS
 ================================================================ */
-
-
-/*
-    The CSV contains overlap rows rather than one simple row per
-    jurisdiction.
-
-    Therefore the application converts those rows into logical
-    entities before searching.
-
-    This is the important structural change from the original MVP.
-*/
 
 
 function createEntity(
@@ -1923,17 +2180,6 @@ function createEntity(
 }
 
 
-/*
-    Determine the logical entities represented by a row.
-
-    One row can contribute to several entities:
-
-        State
-        County
-        County subdivision
-        Place
-        AIANNH area
-*/
 function entitiesFromRow(row) {
 
     const result = [];
@@ -1980,7 +2226,7 @@ function entitiesFromRow(row) {
 
 
     /* -------------------------
-       COUNTY SUBDIVISION / MCD
+       COUNTY SUBDIVISION
     ------------------------- */
 
     const mcdName = clean(row.MCD_NAME);
@@ -2048,16 +2294,6 @@ function entitiesFromRow(row) {
 ================================================================ */
 
 
-/*
-    Because the same jurisdiction can occur on many overlap rows,
-    we deduplicate those rows into logical entities.
-
-    This is what prevents the application from simply doing:
-
-        matches[0]
-
-    which was the original problem.
-*/
 function buildEntityIndex() {
 
     const entityMap = new Map();
@@ -2103,16 +2339,6 @@ function buildEntityIndex() {
 ================================================================ */
 
 
-/*
-    The original application used:
-
-        row.split(",")
-
-    That is fragile because a real CSV can contain quoted commas.
-
-    This parser handles normal CSV quoting without requiring
-    an external library.
-*/
 function parseCSV(text) {
 
     const rows = [];
@@ -2332,9 +2558,6 @@ function entityTypeLabel(type) {
 }
 
 
-/*
-    Shorter labels for visual hierarchy.
-*/
 function hierarchyLabel(type) {
 
     const labels = {
@@ -2355,9 +2578,6 @@ function hierarchyLabel(type) {
 }
 
 
-/*
-    CSS class corresponding to entity type.
-*/
 function entityTypeClass(type) {
 
     return `type-${type}`;
@@ -2367,25 +2587,6 @@ function entityTypeClass(type) {
 /* ================================================================
    SEARCH RANKING
 ================================================================ */
-
-
-/*
-    Search ranking is deliberately based on Levels 1-3.
-
-    Level 1:
-        Exact match
-
-    Level 2:
-        Strong structural match
-        - starts with query
-        - exact base name
-        - all search words appear
-
-    Level 3:
-        Broader partial match
-        - contains query
-        - contains base query
-*/
 
 
 function scoreEntity(entity, query) {
@@ -2442,10 +2643,6 @@ function scoreEntity(entity, query) {
     }
 
 
-    /*
-        "Allegany Reservation" should exactly match the reservation
-        rather than accidentally matching another geographic level.
-    */
     if (
         baseName &&
         baseQuery &&
@@ -2499,10 +2696,6 @@ function scoreEntity(entity, query) {
     }
 
 
-    /*
-        Every token from the query appears somewhere in the
-        entity's name or type.
-    */
     const searchable =
         `${name} ${type}`;
 
@@ -2561,13 +2754,6 @@ function scoreEntity(entity, query) {
     }
 
 
-    /*
-        Slightly prioritize more specific entities when the
-        actual names are equally strong.
-
-        This is intentionally a small adjustment so it never
-        overrides an exact match.
-    */
     const specificityBonus = {
 
         place: 7,
@@ -2595,9 +2781,6 @@ function scoreEntity(entity, query) {
 ================================================================ */
 
 
-/*
-    Search the logical entity index rather than raw CSV rows.
-*/
 function searchEntities(query) {
 
     const normalizedQuery =
@@ -2650,6 +2833,13 @@ function searchEntities(query) {
 ================================================================ */
 
 
+/*
+    Normal form submission.
+
+    If the user simply presses Enter without selecting a result
+    with the keyboard, this performs the search and leaves the
+    matching results displayed.
+*/
 document
     .getElementById("searchForm")
     .addEventListener(
@@ -2658,41 +2848,184 @@ document
 
             event.preventDefault();
 
-            searchLocation();
+
+            if (
+                activeSearchIndex >= 0 &&
+                activeSearchIndex <
+                    currentSearchMatches.length
+            ) {
+
+                const selected =
+                    currentSearchMatches[
+                        activeSearchIndex
+                    ];
+
+
+                if (selected && selected.entity) {
+
+                    selectEntityByKey(
+                        selected.entity.key
+                    );
+
+                    return;
+                }
+            }
+
+
+            /*
+                No keyboard result is selected.
+
+                Just perform the search normally.
+            */
+            searchLocation(true);
+        }
+    );
+
+
+/* ================================================================
+   KEYBOARD SEARCH NAVIGATION
+================================================================ */
+
+
+/*
+    This is intentionally kept simple.
+
+    While the search input has focus:
+
+        Arrow Down = move down one result
+        Arrow Up   = move up one result
+        Enter      = handled by the form above
+
+    If no result is selected, Enter simply performs the search.
+
+    The user does not need to move focus away from the search
+    input in order to use the keyboard.
+*/
+document
+    .getElementById("search")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            const hasResults =
+                currentSearchMatches.length > 0;
+
+
+            if (!hasResults) {
+
+                return;
+            }
+
+
+            /* ---------------------------------------------
+               DOWN
+            --------------------------------------------- */
+
+            if (event.key === "ArrowDown") {
+
+                event.preventDefault();
+
+
+                if (
+                    activeSearchIndex <
+                    currentSearchMatches.length - 1
+                ) {
+
+                    activeSearchIndex++;
+
+                } else {
+
+                    /*
+                        Once the user reaches the bottom,
+                        another Down key keeps them on the
+                        final result.
+                    */
+                    activeSearchIndex =
+                        currentSearchMatches.length - 1;
+                }
+
+
+                updateKeyboardSelection();
+
+
+                return;
+            }
+
+
+            /* ---------------------------------------------
+               UP
+            --------------------------------------------- */
+
+            if (event.key === "ArrowUp") {
+
+                event.preventDefault();
+
+
+                if (activeSearchIndex > 0) {
+
+                    activeSearchIndex--;
+
+                } else {
+
+                    /*
+                        If no result is selected yet,
+                        Up starts at the first result.
+
+                        If already at the first result,
+                        remain there.
+                    */
+                    activeSearchIndex = 0;
+                }
+
+
+                updateKeyboardSelection();
+
+
+                return;
+            }
+
+
+            /*
+                Enter is deliberately NOT handled here.
+
+                The form's submit handler handles it.
+
+                That means:
+
+                Enter + highlighted result
+                    -> opens that result
+
+                Enter + no highlighted result
+                    -> performs normal search
+            */
         }
     );
 
 
 /*
-    Search automatically as the user types.
+    Live search.
 
-    The short delay keeps the interface responsive while
-    preventing the search from firing excessively during
-    rapid typing.
+    As the user types, matching options are displayed
+    immediately.
 */
-let searchTimer = null;
-
 document
     .getElementById("search")
     .addEventListener(
         "input",
         function() {
 
-            clearTimeout(searchTimer);
+            /*
+                Every time the search text changes, start the
+                keyboard selection over again.
+            */
+            activeSearchIndex = -1;
 
-            searchTimer = setTimeout(
-                function() {
-
-                    searchLocation();
-
-                },
-                100
-            );
+            searchLocation(false);
         }
     );
 
 
-function searchLocation() {
+function searchLocation(fromSubmit = false) {
 
     const input =
         document.getElementById("search");
@@ -2706,7 +3039,15 @@ function searchLocation() {
         query;
 
 
+    /*
+        No search text means no current search results.
+    */
     if (!query) {
+
+        currentSearchMatches = [];
+
+        activeSearchIndex = -1;
+
 
         document.getElementById(
             "searchResults"
@@ -2720,8 +3061,28 @@ function searchLocation() {
         searchEntities(query);
 
 
+    currentSearchMatches =
+        matches;
+
+
+    /*
+        The normal search always starts with no keyboard
+        selection.
+
+        This is important because pressing Enter on a new
+        search should simply show the results unless the
+        user explicitly selected one with Up / Down.
+    */
+    if (!fromSubmit) {
+
+        activeSearchIndex = -1;
+
+    }
+
+
     displaySearchResults(
-        matches
+        matches,
+        fromSubmit
     );
 }
 
@@ -2731,7 +3092,10 @@ function searchLocation() {
 ================================================================ */
 
 
-function displaySearchResults(matches) {
+function displaySearchResults(
+    matches,
+    fromSubmit = false
+) {
 
     const container =
         document.getElementById(
@@ -2740,6 +3104,11 @@ function displaySearchResults(matches) {
 
 
     if (matches.length === 0) {
+
+        currentSearchMatches = [];
+
+        activeSearchIndex = -1;
+
 
         container.innerHTML = `
 
@@ -2768,13 +3137,28 @@ function displaySearchResults(matches) {
 
 
     /*
-        We don't dump hundreds of results onto the screen.
-
         The search engine ranks everything, but the interface
-        initially presents the strongest 12 choices.
+        presents the strongest 12 choices.
     */
     const visible =
         matches.slice(0, 12);
+
+
+    /*
+        Keyboard navigation should only navigate through
+        results that are actually visible on the screen.
+    */
+    currentSearchMatches =
+        visible;
+
+
+    if (
+        activeSearchIndex >=
+        visible.length
+    ) {
+
+        activeSearchIndex = -1;
+    }
 
 
     container.innerHTML = `
@@ -2796,7 +3180,11 @@ function displaySearchResults(matches) {
         </div>
 
 
-        <div class="result-list">
+        <div
+            class="result-list"
+            role="listbox"
+            aria-label="Search results"
+        >
 
             ${visible.map(
                 (result, index) =>
@@ -2832,6 +3220,66 @@ function displaySearchResults(matches) {
                 }
             );
         });
+
+
+    updateKeyboardSelection();
+}
+
+
+/* ================================================================
+   KEYBOARD SELECTION DISPLAY
+================================================================ */
+
+
+/*
+    Applies the visual keyboard highlight to the currently
+    selected result.
+
+    The search input remains focused while this happens, so the
+    user can simply press Up / Down / Enter without using the mouse.
+*/
+function updateKeyboardSelection() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".result-option"
+        );
+
+
+    buttons.forEach(
+        (button, index) => {
+
+            const isSelected =
+                index === activeSearchIndex;
+
+
+            button.classList.toggle(
+                "keyboard-selected",
+                isSelected
+            );
+
+
+            button.setAttribute(
+                "aria-selected",
+                isSelected
+                    ? "true"
+                    : "false"
+            );
+
+
+            if (isSelected) {
+
+                /*
+                    Keep the highlighted option visible if the
+                    results list is longer than the available
+                    screen space.
+                */
+                button.scrollIntoView({
+                    block: "nearest"
+                });
+            }
+        }
+    );
 }
 
 
@@ -2855,6 +3303,8 @@ function renderSearchOption(
         <button
             class="result-option"
             type="button"
+            role="option"
+            aria-selected="false"
             data-key="${escapeHTML(entity.key)}"
         >
 
@@ -2902,16 +3352,6 @@ function renderSearchOption(
 ================================================================ */
 
 
-/*
-    This is particularly important for duplicate names.
-
-    Example:
-
-        Albany County
-        Albany city
-
-    or two jurisdictions with the same name in different counties.
-*/
 function getEntityContext(entity) {
 
     const parts = [];
@@ -2959,7 +3399,17 @@ function getEntityContext(entity) {
 ================================================================ */
 
 
-function selectEntityByKey(key) {
+/*
+    This is the normal navigation function.
+
+    It also adds the selected jurisdiction to browser history,
+    allowing the browser Back button to move back through the
+    jurisdictions the user previously viewed.
+*/
+function selectEntityByKey(
+    key,
+    addToHistory = true
+) {
 
     const entity =
         entities.find(
@@ -2973,21 +3423,20 @@ function selectEntityByKey(key) {
     }
 
 
-    /*
-        Keep the user's search in the search field.
-    */
     document.getElementById(
         "search"
     ).value =
         currentSearch;
 
 
-    /*
-        Hide the search candidate list once a selection is made.
-    */
     document.getElementById(
         "searchResults"
     ).innerHTML = "";
+
+
+    currentSearchMatches = [];
+
+    activeSearchIndex = -1;
 
 
     displayEntity(
@@ -2996,8 +3445,24 @@ function selectEntityByKey(key) {
 
 
     /*
-        Bring the selected result into view.
+        Save this navigation in the browser's history.
+
+        This makes the browser's Back button useful when users
+        navigate through the hierarchy.
     */
+    if (addToHistory) {
+
+        history.pushState(
+            {
+                type: "entity",
+                key: entity.key
+            },
+            "",
+            ""
+        );
+    }
+
+
     document
         .getElementById("result")
         .scrollIntoView({
@@ -3012,24 +3477,6 @@ function selectEntityByKey(key) {
 ================================================================ */
 
 
-/*
-    This is the central hierarchy function.
-
-    It intentionally does NOT assume:
-
-        State
-        ↓
-        County
-        ↓
-        MCD
-        ↓
-        Place
-
-    always exists.
-
-    Instead, it builds the path from whatever geographic
-    entities actually exist in the source row.
-*/
 function displayEntity(entity) {
 
     const result =
@@ -3100,124 +3547,145 @@ function displayEntity(entity) {
 
 
             <!-- =============================================
-                 WHERE THIS JURISDICTION FITS
+                 MAIN + SIDEBAR
             ============================================== -->
 
-            <section class="section">
-
-                <h3 class="section-title">
-                    Where this jurisdiction fits
-                </h3>
+            <div class="detail-body-grid">
 
 
-                <p class="section-description">
-                    The geographic path represented by
-                    the selected source record. Only
-                    levels that actually exist are shown.
-                </p>
+                <!-- =========================================
+                     MAIN COLUMN
+                ========================================== -->
+
+                <div class="detail-main-column">
 
 
-                <div class="hierarchy-note">
+                    <!-- =====================================
+                         GEOGRAPHIC PATH
+                    ====================================== -->
 
-                    <span>ⓘ</span>
+                    <section class="section">
 
-                    <span>
-                        Some geographic areas, including
-                        AIANNH areas, do not follow the same
-                        nesting structure as standard
-                        county subdivisions and places.
-                        The Explorer preserves that distinction
-                        while still showing the useful
-                        state and county context from the
-                        LUCA source data.
-                    </span>
+                        <h3 class="section-title">
+                            Geographic path
+                        </h3>
+
+
+                        <p class="section-description">
+                            The geographic levels associated with
+                            this selection. Only levels that
+                            actually exist are shown.
+                        </p>
+
+
+                        <div class="hierarchy-note">
+
+                            <span>ⓘ</span>
+
+                            <span>
+                                Some geographic areas, including
+                                AIANNH areas, do not follow the same
+                                nesting structure as standard
+                                county subdivisions and places.
+                                The Explorer preserves that distinction
+                                while still showing useful state and
+                                county context from the source data.
+                            </span>
+
+                        </div>
+
+
+                        <div class="hierarchy">
+
+                            ${hierarchy}
+
+                        </div>
+
+
+                        ${
+                            missing.length > 0
+                                ? `
+
+                                    <div class="missing-information">
+
+                                        <strong>
+                                            Other levels in this source record:
+                                        </strong>
+
+                                        ${missing
+                                            .map(
+                                                item =>
+                                                    escapeHTML(item)
+                                            )
+                                            .join("  •  ")}
+
+                                    </div>
+
+                                `
+                                : ""
+                        }
+
+
+                        ${
+                            entity.type === "aiannh"
+                                ? `
+
+                                    <div class="aiannh-context">
+
+                                        <h4>
+                                            AIANNH area
+                                        </h4>
+
+                                        <p>
+                                            This jurisdiction is identified
+                                            by the source data as an
+                                            American Indian, Alaska Native,
+                                            or Native Hawaiian area.
+                                            It is displayed as its own
+                                            geographic type rather than
+                                            being incorrectly classified as
+                                            a county subdivision or place.
+                                        </p>
+
+                                    </div>
+
+                                `
+                                : ""
+                        }
+
+                    </section>
+
+
+
+                    <!-- =====================================
+                         COORDINATION
+                    ====================================== -->
+
+                    ${renderCoordinationSection(entity)}
+
+
+
+                    <!-- =====================================
+                         RELATED JURISDICTIONS
+                    ====================================== -->
+
+                    ${renderRelatedSection(entity)}
 
                 </div>
 
 
-                <div class="hierarchy">
 
-                    ${hierarchy}
+                <!-- =========================================
+                     RIGHT SIDEBAR
+                ========================================== -->
 
-                </div>
+                <aside class="detail-sidebar">
 
+                    ${renderIdentifierSection(entity)}
 
-                ${
-                    missing.length > 0
-                        ? `
+                </aside>
 
-                            <div class="missing-information">
-
-                                <strong>
-                                    Other levels in this source record:
-                                </strong>
-
-                                ${missing
-                                    .map(
-                                        item =>
-                                            escapeHTML(item)
-                                    )
-                                    .join("  •  ")}
-
-                            </div>
-
-                        `
-                        : ""
-                }
-
-
-                ${
-                    entity.type === "aiannh"
-                        ? `
-
-                            <div class="aiannh-context">
-
-                                <h4>
-                                    AIANNH area
-                                </h4>
-
-                                <p>
-                                    This jurisdiction is identified
-                                    by the source data as an
-                                    American Indian, Alaska Native,
-                                    or Native Hawaiian area.
-                                    It is displayed as its own
-                                    geographic type rather than
-                                    being incorrectly classified as
-                                    a county subdivision or place.
-                                </p>
-
-                            </div>
-
-                        `
-                        : ""
-                }
-
-            </section>
-
-
-
-            <!-- =============================================
-                 COORDINATION
-            ============================================== -->
-
-            ${renderCoordinationSection(entity)}
-
-
-
-            <!-- =============================================
-                 IDENTIFIERS
-            ============================================== -->
-
-            ${renderIdentifierSection(entity)}
-
-
-
-            <!-- =============================================
-                 RELATED JURISDICTIONS
-            ============================================== -->
-
-            ${renderRelatedSection(entity)}
+            </div>
 
         </article>
 
@@ -3229,6 +3697,8 @@ function displayEntity(entity) {
 
 
     attachRelatedToggle();
+
+    attachHierarchyNavigation();
 }
 
 
@@ -3237,35 +3707,6 @@ function displayEntity(entity) {
 ================================================================ */
 
 
-/*
-    The hierarchy is constructed according to the selected entity.
-
-    STANDARD:
-
-        State
-          ↓
-        County
-          ↓
-        County subdivision
-          ↓
-        Place
-
-    AIANNH:
-
-        State
-          ↓
-        County
-          ↓
-        AIANNH Area
-
-    This fixes the original problem where:
-
-        State
-        Allegany Reservation
-
-    could accidentally be displayed because AIA_NAME was being
-    confused with ST_NAME or another level.
-*/
 function buildHierarchy(entity) {
 
     const nodes = [];
@@ -3283,6 +3724,11 @@ function buildHierarchy(entity) {
 
             name:
                 entity.stateName,
+
+            key:
+                entity.statefp
+                    ? `state|${entity.statefp}`
+                    : null,
 
             selected:
                 entity.type === "state"
@@ -3307,6 +3753,12 @@ function buildHierarchy(entity) {
             name:
                 entity.countyName,
 
+            key:
+                entity.statefp &&
+                entity.countyfp
+                    ? `county|${entity.statefp}|${entity.countyfp}`
+                    : null,
+
             selected:
                 entity.type === "county"
 
@@ -3314,12 +3766,10 @@ function buildHierarchy(entity) {
     }
 
 
-    /*
-        AIANNH is deliberately handled separately.
+    /* -------------------------
+       AIANNH
+    ------------------------- */
 
-        We do not insert MCD or Place ahead of it simply because
-        those values happen to exist on another overlap record.
-    */
     if (entity.type === "aiannh") {
 
         nodes.push({
@@ -3328,6 +3778,9 @@ function buildHierarchy(entity) {
 
             name:
                 entity.aiannhName,
+
+            key:
+                entity.key,
 
             selected:
                 true
@@ -3353,6 +3806,13 @@ function buildHierarchy(entity) {
             name:
                 entity.cousubName,
 
+            key:
+                entity.statefp &&
+                entity.countyfp &&
+                entity.cousubfp
+                    ? `mcd|${entity.statefp}|${entity.countyfp}|${entity.cousubfp}`
+                    : null,
+
             selected:
                 entity.type === "mcd"
 
@@ -3376,6 +3836,9 @@ function buildHierarchy(entity) {
             name:
                 entity.placeName,
 
+            key:
+                entity.key,
+
             selected:
                 true
 
@@ -3387,6 +3850,11 @@ function buildHierarchy(entity) {
         .map(
             (node, index) => {
 
+                const isClickable =
+                    node.key &&
+                    !node.selected;
+
+
                 return `
 
                     <div class="hierarchy-node">
@@ -3397,7 +3865,15 @@ function buildHierarchy(entity) {
                                 ${node.selected
                                     ? "selected"
                                     : ""}
+                                ${isClickable
+                                    ? "clickable"
+                                    : ""}
                             "
+                            ${
+                                isClickable
+                                    ? `data-hierarchy-key="${escapeHTML(node.key)}"`
+                                    : ""
+                            }
                         >
 
                             <span class="hierarchy-level">
@@ -3413,6 +3889,16 @@ function buildHierarchy(entity) {
                                     node.name
                                 )}
                             </span>
+
+                            ${
+                                isClickable
+                                    ? `
+                                        <span class="hierarchy-click-hint">
+                                            View this level
+                                        </span>
+                                      `
+                                    : ""
+                            }
 
                         </div>
 
@@ -3439,22 +3925,42 @@ function buildHierarchy(entity) {
 
 
 /* ================================================================
+   HIERARCHY NAVIGATION
+================================================================ */
+
+
+function attachHierarchyNavigation() {
+
+    document
+        .querySelectorAll(
+            "[data-hierarchy-key]"
+        )
+        .forEach(node => {
+
+            node.addEventListener(
+                "click",
+                function() {
+
+                    const key =
+                        this.dataset.hierarchyKey;
+
+
+                    selectEntityByKey(
+                        key
+                    );
+
+                }
+            );
+
+        });
+}
+
+
+/* ================================================================
    MISSING LEVELS
 ================================================================ */
 
 
-/*
-    Important:
-
-    We don't say "99999".
-
-    We translate it into human-readable information.
-
-    For example:
-
-        County subdivision: None
-        Place: None
-*/
 function getMissingLevels(entity) {
 
     const missing = [];
@@ -3495,27 +4001,6 @@ function getMissingLevels(entity) {
     }
 
 
-    if (
-        entity.type === "county"
-    ) {
-
-        /*
-            We intentionally don't list every possible lower-level
-            absence here. A county can contain many entities.
-        */
-    }
-
-
-    if (
-        entity.type === "state"
-    ) {
-
-        /*
-            State is intentionally a top-level selection.
-        */
-    }
-
-
     return missing;
 }
 
@@ -3525,23 +4010,11 @@ function getMissingLevels(entity) {
 ================================================================ */
 
 
-/*
-    Contacts are placeholders for now.
-
-    Importantly, they are NOT mixed into the geographic data.
-
-    When the actual contact dataset arrives later, this section
-    can be connected to it without rebuilding the geographic
-    search/indexing system.
-*/
 function renderCoordinationSection(entity) {
 
     const levels = [];
 
 
-    /*
-        Add the selected entity first.
-    */
     levels.push({
 
         name:
@@ -3556,10 +4029,6 @@ function renderCoordinationSection(entity) {
             true
     });
 
-
-    /*
-        Add the parent/context levels that actually exist.
-    */
 
     if (
         entity.countyName &&
@@ -3626,35 +4095,6 @@ function renderCoordinationSection(entity) {
             <h3 class="section-title">
                 Coordination
             </h3>
-
-
-            <div class="coordination-intro">
-
-                <h3>
-                    Future LUCA contact information
-                </h3>
-
-
-                <p>
-                    This section is intentionally prepared
-                    for the future LUCA contact/coordination
-                    dataset.
-                </p>
-
-
-                <p>
-                    Coordination information coming next.
-                </p>
-
-
-                <p>
-                    The geographic hierarchy is now separated
-                    cleanly from the future contact information,
-                    so contact records can be added later without
-                    rebuilding the search system.
-                </p>
-
-            </div>
 
 
             <div class="coordination-grid">
@@ -3772,12 +4212,6 @@ function renderContactCard(level) {
 ================================================================ */
 
 
-/*
-    Only show identifiers that actually exist.
-
-    This keeps the interface clean and avoids showing meaningless
-    99999/9999 values.
-*/
 function renderIdentifierSection(entity) {
 
     const identifiers = [];
@@ -3865,14 +4299,14 @@ function renderIdentifierSection(entity) {
 
     return `
 
-        <section class="section">
+        <div class="identifier-sidebar">
 
-            <h3 class="section-title">
+            <h3 class="identifier-sidebar-title">
                 Geographic identifiers
             </h3>
 
 
-            <p class="section-description">
+            <p class="identifier-sidebar-description">
                 Identifiers are shown directly from the
                 source data.
             </p>
@@ -3906,7 +4340,7 @@ function renderIdentifierSection(entity) {
 
             </div>
 
-        </section>
+        </div>
 
     `;
 }
@@ -3917,13 +4351,6 @@ function renderIdentifierSection(entity) {
 ================================================================ */
 
 
-/*
-    This is the beginning of the "go backwards / go forwards"
-    capability.
-
-    For now it is deliberately expandable so large counties don't
-    dump hundreds of jurisdictions onto the screen immediately.
-*/
 function renderRelatedSection(entity) {
 
     const related =
@@ -4008,16 +4435,6 @@ function renderRelatedSection(entity) {
 ================================================================ */
 
 
-/*
-    Relationships are currently inferred from the geographic
-    identifiers in the CSV.
-
-    That is enough for the current source data.
-
-    Later, if a formal relationship dataset is introduced, this
-    function can be replaced with explicit relationship tables
-    without changing the search interface.
-*/
 function getRelatedEntities(entity) {
 
     return entities
@@ -4031,9 +4448,6 @@ function getRelatedEntities(entity) {
             }
 
 
-            /*
-                Same state
-            */
             if (
                 entity.statefp &&
                 other.statefp !== entity.statefp
@@ -4043,10 +4457,6 @@ function getRelatedEntities(entity) {
             }
 
 
-            /*
-                State selection:
-                related entities are all entities in that state.
-            */
             if (
                 entity.type === "state"
             ) {
@@ -4055,10 +4465,6 @@ function getRelatedEntities(entity) {
             }
 
 
-            /*
-                County selection:
-                related entities must be in that county.
-            */
             if (
                 entity.countyfp &&
                 other.countyfp !== entity.countyfp
@@ -4068,10 +4474,6 @@ function getRelatedEntities(entity) {
             }
 
 
-            /*
-                For county itself, all entities in that county
-                are potentially related.
-            */
             if (
                 entity.type === "county"
             ) {
@@ -4080,10 +4482,6 @@ function getRelatedEntities(entity) {
             }
 
 
-            /*
-                County subdivision:
-                same county subdivision.
-            */
             if (
                 entity.type === "mcd"
             ) {
@@ -4095,10 +4493,6 @@ function getRelatedEntities(entity) {
             }
 
 
-            /*
-                Place:
-                same county and same place code.
-            */
             if (
                 entity.type === "place"
             ) {
@@ -4110,10 +4504,6 @@ function getRelatedEntities(entity) {
             }
 
 
-            /*
-                AIANNH:
-                same AIANNH code.
-            */
             if (
                 entity.type === "aiannh"
             ) {
@@ -4265,9 +4655,6 @@ function attachRelatedToggle() {
                             : `Show related jurisdictions (${target.querySelectorAll(".related-item").length})`;
 
 
-                    /*
-                        Add click behavior to related jurisdictions.
-                    */
                     target
                         .querySelectorAll(
                             ".related-item"
@@ -4312,11 +4699,278 @@ function useExample(value) {
         value;
 
 
-    searchLocation();
+    activeSearchIndex = -1;
+
+    currentSearchMatches = [];
+
+
+    /*
+        Treat example buttons as a normal search.
+    */
+    searchLocation(true);
 
 
     input.focus();
 }
+
+
+/* ================================================================
+   RESET / HOME
+================================================================ */
+
+
+function resetExplorer(
+    addToHistory = true
+) {
+
+    const input =
+        document.getElementById(
+            "search"
+        );
+
+
+    input.value = "";
+
+    currentSearch = "";
+
+    activeSearchIndex = -1;
+
+    currentSearchMatches = [];
+
+
+    document.getElementById(
+        "searchResults"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+        "result"
+    ).innerHTML = `
+
+        <div class="welcome-card">
+
+            <h3>
+                Start by searching for a jurisdiction
+            </h3>
+
+            <p>
+                The explorer will show the selected jurisdiction's
+                geographic path, available levels, identifiers,
+                related jurisdictions, and the future coordination
+                contact area.
+            </p>
+
+
+            <div class="search-examples">
+
+                <button
+                    class="example-button"
+                    onclick="useExample('Albany County')"
+                >
+                    Albany County
+                </button>
+
+                <button
+                    class="example-button"
+                    onclick="useExample('Albany city')"
+                >
+                    Albany city
+                </button>
+
+                <button
+                    class="example-button"
+                    onclick="useExample('Aurelius')"
+                >
+                    Aurelius
+                </button>
+
+                <button
+                    class="example-button"
+                    onclick="useExample('Allegany Reservation')"
+                >
+                    Allegany Reservation
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /*
+        If the user clicked the LUCA title to return home,
+        store that action in browser history so the browser
+        Back button can move forward through the previous
+        application state.
+    */
+    if (addToHistory) {
+
+        history.pushState(
+            {
+                type: "home"
+            },
+            "",
+            ""
+        );
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+
+    input.focus();
+}
+
+
+/* ================================================================
+   HOME BUTTON
+================================================================ */
+
+
+document
+    .getElementById("homeButton")
+    .addEventListener(
+        "click",
+        function() {
+
+            resetExplorer(true);
+
+        }
+    );
+
+
+/* ================================================================
+   BROWSER BACK / FORWARD NAVIGATION
+================================================================ */
+
+
+/*
+    If the user navigates between jurisdictions and then presses
+    the browser Back button, restore the previous jurisdiction.
+
+    This is deliberately simple and does not change the URL.
+*/
+window.addEventListener(
+    "popstate",
+    function(event) {
+
+        const state =
+            event.state;
+
+
+        if (
+            state &&
+            state.type === "entity" &&
+            state.key
+        ) {
+
+            selectEntityByKey(
+                state.key,
+                false
+            );
+
+
+            return;
+        }
+
+
+        /*
+            No entity state means we return to the home/search
+            screen.
+        */
+        resetExplorer(false);
+    }
+);
+
+
+/* ================================================================
+   BACK TO SEARCH
+================================================================ */
+
+
+/*
+    Show the floating button once the user has scrolled past the
+    main search area.
+*/
+function updateBackToSearchButton() {
+
+    const searchHero =
+        document.getElementById(
+            "searchHero"
+        );
+
+
+    const button =
+        document.getElementById(
+            "backToSearch"
+        );
+
+
+    if (!searchHero || !button) {
+        return;
+    }
+
+
+    const searchBottom =
+        searchHero.getBoundingClientRect().bottom;
+
+
+    if (searchBottom < 0) {
+
+        button.classList.add(
+            "visible"
+        );
+
+    } else {
+
+        button.classList.remove(
+            "visible"
+        );
+
+    }
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateBackToSearchButton,
+    {
+        passive: true
+    }
+);
+
+
+document
+    .getElementById("backToSearch")
+    .addEventListener(
+        "click",
+        function() {
+
+            document
+                .getElementById("searchHero")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+
+            setTimeout(
+                function() {
+
+                    document
+                        .getElementById("search")
+                        .focus();
+
+                },
+                450
+            );
+
+        }
+    );
 
 
 /* ================================================================
